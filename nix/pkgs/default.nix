@@ -9,7 +9,7 @@
     inherit (pkgs) callPackage;
   in {
     packages = rec {
-      tome = callPackage ./package {
+      tome = callPackage ./tome {
         inherit
           craneLib
           pkgs
