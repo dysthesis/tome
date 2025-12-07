@@ -1,6 +1,19 @@
-use std::path::PathBuf;
+pub mod fetcher;
+pub mod parser;
 
-pub struct Plugin {
+use std::{marker::PhantomData, path::PathBuf};
+
+use color_eyre::eyre::Result;
+
+trait PluginType {}
+
+struct Fetcher {}
+impl PluginType for Fetcher {}
+
+pub struct Plugin<T>
+where
+    T: PluginType,
+{
     path: PathBuf,
     name: String,
     // TODO: Define the input/output contract format for the plugin, to allow
@@ -9,9 +22,5 @@ pub struct Plugin {
     input: String,
     output: String,
     // TODO: The plugin manifest should include dependency hashes as well
-}
-
-enum Type {
-    Fetcher,
-    Parser,
+    _type: PhantomData<T>,
 }
